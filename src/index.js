@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import initialData from './initial-data';
 import Column from './Column';
 import 'reset-css';
@@ -56,7 +56,8 @@ class App extends React.Component {
     }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
-
-
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <App />
+);
 
