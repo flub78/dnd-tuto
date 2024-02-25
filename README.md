@@ -6,4 +6,13 @@
 
 In the project directory, you can run:
 
-### `npm start`
+    npm start
+
+
+## Dependencies
+
+```
+	npm install styled-components
+	npm install reset-css
+    npm install react-beautiful-dnd
+```
