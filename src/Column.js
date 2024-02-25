@@ -6,11 +6,20 @@ import { Droppable } from 'react-beautiful-dnd';
 const Container = styled.div`
         margin: 8px;
         border: 1px solid lightgrey;
-        border-radius: 2px;`;
+        border-radius: 2px;
+        background-color: ;
+        font-family: Arial, Helvetica, sans-serif;
+        `;
+
 const Title = styled.h3`
-        padding: 8px;`;
+        padding: 8px;
+        font-weight: bold;
+        font-size: 1.2em;`;
+
 const TaskList = styled.div`
-        padding: 8px;`;
+        padding: 8px;
+        background-color: ${props => (props.isDraggingOver ? 'skyblue' : 'white')};
+        `;
 
 const Column = (props) => {
 
@@ -18,12 +27,14 @@ const Column = (props) => {
         <Container>
             <Title>{props.column.title}</Title>
             <Droppable droppableId={props.column.id}>
-                {(provided) => (
+                {(provided, snapshot) => (
                     <TaskList
                         ref={provided.innerRef}
+                        isDraggingOver={snapshot.isDraggingOver}
                         {...provided.droppableProps}>
                         {props.tasks.map((task, index) => <Task key={task.id} task={task} index={index} />)}
                         {provided.placeholder}
+
                     </TaskList>
                 )
                 }
