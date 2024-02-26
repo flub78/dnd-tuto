@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import initialData from './initial-data';
 import Column from './Column';
 import 'reset-css';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -85,13 +85,23 @@ const App = () => {
 
     return (
         <DragDropContext onDragEnd={onDragEnd} >
-            <Container>
-                {state.columnOrder.map(columnId => {
-                    const column = state.columns[columnId];
-                    const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
-                    return <Column key={column.id} column={column} tasks={tasks} />;
-                })}
-            </Container>
+            <Droppable droppableId="all-columns" direction="horizontal" type="column">
+                {(provided) => (
+                    <Container
+                        // add the ref to the provided.innerRef
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                    >
+                        {state.columnOrder.map((columnId, index) => {
+                            const column = state.columns[columnId];
+                            const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
+                            return <Column key={column.id} column={column} tasks={tasks} index={index} />;
+                        })}
+                        {provided.placeholder}
+                    </Container>
+                )}
+
+            </Droppable>
         </DragDropContext>
     );
 
