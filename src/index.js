@@ -16,7 +16,7 @@ const App = () => {
     const [state, setState] = React.useState(initialData);
 
     const onDragEnd = result => {
-        const { destination, source, draggableId } = result;
+        const { destination, source, draggableId, type } = result;
         console.log(source, destination, draggableId);
 
         if (!destination) {
@@ -26,6 +26,20 @@ const App = () => {
 
         if (destination.droppableId === source.droppableId && destination.index === source.index) {
             // dropped in the same place
+            return;
+        }
+
+        if (type === 'column') {
+            const newColumnOrder = Array.from(state.columnOrder);
+            newColumnOrder.splice(source.index, 1);
+            newColumnOrder.splice(destination.index, 0, draggableId);
+
+            const newState = {
+                ...state,
+                columnOrder: newColumnOrder
+            };
+
+            setState(newState);
             return;
         }
 
@@ -85,7 +99,10 @@ const App = () => {
 
     return (
         <DragDropContext onDragEnd={onDragEnd} >
-            <Droppable droppableId="all-columns" direction="horizontal" type="column">
+            <Droppable
+                droppableId="all-columns"
+                direction="horizontal"
+                type="column">
                 {(provided) => (
                     <Container
                         // add the ref to the provided.innerRef
