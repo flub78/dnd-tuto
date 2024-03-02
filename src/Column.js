@@ -16,13 +16,13 @@ const Container = styled.div`
 const Title = styled.h3`
         padding: 8px;
         font-weight: bold;
-                background-color: ${props => (props.isDraggingOver ? 'skyblue' : 'white')};
+                background-color: ${props => (props.is_dragging_over ? 'skyblue' : 'white')};
 
         font-size: 1.2em;`;
 
 const TaskList = styled.div`
         padding: 8px;
-        background-color: ${props => (props.isDraggingOver ? 'skyblue' : 'white')};
+        background-color: ${props => (props.is_dragging_over ? 'skyblue' : 'white')};
         flex-grow: 1;
         min-height: 100px;
         `;
@@ -47,7 +47,7 @@ const Column = (props) => {
                             {(provided, snapshot) => (
                                 <TaskList
                                     ref={provided.innerRef}
-                                    isDraggingOver={snapshot.isDraggingOver}
+                                    is_dragging_over={snapshot.isDraggingOver}
                                     {...provided.droppableProps}>
 
                                     {props.tasks.map((task, index) =>
